@@ -1,96 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gastos de Viagem</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
-header { background: #1e88e5; color: #fff; padding: 15px; text-align: center; }
-.container { padding: 15px; }
-input, select, button { width: 100%; padding: 10px; margin: 5px 0; }
-button { background: #1e88e5; color: #fff; border: none; border-radius: 5px; }
-.card { background: #fff; padding: 10px; margin: 10px 0; border-radius: 5px; }
-.total { font-size: 20px; font-weight: bold; }
-</style>
-</head>
-<body>
-
-<header>
-<h2>Gastos da Viagem</h2>
-</header>
-
-<div class="container">
-<div class="card">
-<input id="desc" placeholder="Descrição">
-<input id="valor" type="number" placeholder="Valor">
-<select id="categoria">
-<option>Mercado</option>
-<option>Compras</option>
-<option>Restaurantes</option>
-<option>Parques</option>
-<option>Hospedagem</option>
-<option>Passagem</option>
-<option>Outros</option>
-</select>
-<button onclick="add()">Adicionar gasto</button>
-</div>
-
-<div class="card total">
-Total gasto: R$ <span id="total">0</span>
-</div>
-
-<div id="lista"></div>
-</div>
-
-<script>
-let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
-
-function salvar() {
-  localStorage.setItem("gastos", JSON.stringify(gastos));
-}
-
-function render() {
-  const lista = document.getElementById("lista");
-  lista.innerHTML = "";
-  let total = 0;
-
-  gastos.forEach((g, i) => {
-    total += g.valor;
-    lista.innerHTML += `
-      <div class="card">
-        <strong>${g.desc}</strong><br>
-        ${g.categoria} - R$ ${g.valor.toFixed(2)}
-        <br><button onclick="remover(${i})">Remover</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("total").innerText = total.toFixed(2);
-}
-
-function add() {
-  const desc = document.getElementById("desc").value;
-  const valor = parseFloat(document.getElementById("valor").value);
-  const categoria = document.getElementById("categoria").value;
-  if (!desc || !valor) return;
-
-  gastos.push({ desc, valor, categoria });
-  salvar();
-  render();
-
-  document.getElementById("desc").value = "";
-  document.getElementById("valor").value = "";
-}
-
-function remover(i) {
-  gastos.splice(i, 1);
-  salvar();
-  render();
-}
-
-render();
-</script>
-
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="Viagem Trip" />
+    <meta property="og:description" content="Controle de gastos de viagens inteligente e prático" />
+    <meta
+      property="og:image"
+      content="https://static.getmocha.com/og.png"
+      type="image/png"
+    />
+    <meta
+      property="og:url"
+      content="https://getmocha.com"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:author" content="Mocha" />
+    <meta property="og:site_name" content="Mocha" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:site" content="@get_mocha" />
+    <meta property="twitter:title" content="Viagem Trip" />
+    <meta property="twitter:description" content="Controle de gastos de viagens inteligente e prático" />
+    <meta
+      property="twitter:image"
+      content="https://static.getmocha.com/og.png"
+      type="image/png"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://static.getmocha.com/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://static.getmocha.com/apple-touch-icon.png"
+      type="image/png"
+    />
+    <title>Viagem Trip</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/react-app/main.tsx"></script>
+  </body>
 </html>
